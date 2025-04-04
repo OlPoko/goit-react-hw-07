@@ -39,5 +39,3 @@ export const deleteContact = createAsyncThunk(
     }
   }
 );
-
-export const filteredContacts = createAsyncThunk;

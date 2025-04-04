@@ -7,13 +7,19 @@ import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTasks } from "./redux/contactsOps";
 import { addContact } from "./redux/contactsOps";
+import {
+  selectContacts,
+  selectIsLoading,
+  selectIsError,
+} from "./redux/contactsSlice";
+import Loader from "./components/Loader/Loader";
 
 const App = () => {
   const dispatch = useDispatch();
 
-  const contacts = useSelector((state) => state.contacts.items);
-  const isLoading = useSelector((state) => state.contacts.loading);
-  const isError = useSelector((state) => state.contacts.error);
+  const contacts = useSelector(selectContacts);
+  const isLoading = useSelector(selectIsLoading);
+  const isError = useSelector(selectIsError);
   const [filter, setFilter] = useState("");
 
   useEffect(() => {
@@ -36,8 +42,8 @@ const App = () => {
     <div>
       <h1>Phonebook</h1>
       <ContactForm onAdd={handleAddContact} />
-      {isLoading && <p> loading...</p>}
-      {isError && <p>Error: {isError}</p>}
+      {isLoading && <Loader />}
+      {isError && <Error />}
       <SearchBox value={filter} onChange={handleFilterChange} />
       <ContactList contacts={filteredContacts} />
     </div>
